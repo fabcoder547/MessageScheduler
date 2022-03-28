@@ -46,16 +46,14 @@ public class MessageController {
 
             System.out.println("client here  " + client.toString());
             int result = messageDao.insetMessage(requestBody, client);
-            if (result > 0) {
-                response = new Response(requestId, 200, "Message schedules successfully");
-            } else {
-                response = new Response(requestId, 1002, "Message is not scheduled successfully");
-            }
+
+                response = new Response(requestId, 1000, "Message schedules successfully");
+
 
         } catch (SQLErrorException e) {
             response = new Response(requestId, e.getErrorCode(), e.getErrorMessage());
         } catch (Exception e) {
-            response = new Response(requestId, 1003, "something went wrong!!");
+            response = new Response(requestId, 1004, "something went wrong!!");
         }
         return response;
 

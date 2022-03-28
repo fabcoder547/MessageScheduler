@@ -30,8 +30,11 @@ public class MessageschedulerApplication {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void startScheduler(){
+    public void startScheduler()
+    {
+        //run a task after every 1 minute....
         timer.schedule(task,1000,60000);
+
     }
 
 }

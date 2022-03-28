@@ -36,7 +36,7 @@ public class MessageDao {
 					requestBody.getPhonenumber(), client.getClientId(), LocalDateTime.now(), true,true);
 			return result;
 		} catch (Exception e) {
-			throw new SQLErrorException("error whil doing sql operation",1002);
+			throw new SQLErrorException("error while doing sql operation",1003);
 		}
 
 	}
