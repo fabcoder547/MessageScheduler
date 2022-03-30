@@ -6,14 +6,13 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.app.service.Messageservice;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.app.dao.MessageDao;
 import com.app.exceptions.SQLErrorException;
@@ -26,15 +25,30 @@ import com.app.pojo.Response;
 @RequestMapping("/schedule/")
 public class MessageController {
 
+
+    Logger logger = LoggerFactory.getLogger(MessageController.class);
     @Autowired
-    MessageDao messageDao;
+    Messageservice messageservice;
+
+
+    @GetMapping("/test")
+
+    public Response testRoute(){
+        String requestId = UUID.randomUUID().toString();
+        logger.info("in tesing route");
+        return new Response(requestId,200,"test sucessful..");
+    }
+
+
+
+
 
     /* This is the controller for scheduling whatsapp message */
     @PostMapping("/message")
     public Response scheduleMessageHandler(@RequestBody @Valid Request requestBody, HttpServletRequest request) {
         Response response = null;
         String requestId =  UUID.randomUUID().toString();
-        System.out.println("requestID is -->  "+ requestId);
+       logger.info("request for scheduling message-> "+requestId);
 
         try {
             Client client = (Client) request.getAttribute("client");
@@ -43,16 +57,15 @@ public class MessageController {
                 response = new Response(requestId, 1001, "Authentication failed..");
                 return response;
             }
-
-            System.out.println("client here  " + client.toString());
-            int result = messageDao.insetMessage(requestBody, client);
-
+          logger.info("client: "+client.toString());
+            int result = messageservice.saveMessage(requestBody, client);
                 response = new Response(requestId, 1000, "Message schedules successfully");
 
-
         } catch (SQLErrorException e) {
+            logger.info("sql exception occured");
             response = new Response(requestId, e.getErrorCode(), e.getErrorMessage());
         } catch (Exception e) {
+            logger.info("exception here "+e.getMessage());
             response = new Response(requestId, 1004, "something went wrong!!");
         }
         return response;
@@ -78,6 +91,13 @@ public class MessageController {
 
 
 }
+
+
+
+
+
+
+
 
 
 

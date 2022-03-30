@@ -9,10 +9,18 @@ import javax.validation.constraints.NotNull;
 
 public class Request {
 
+    public Request() {
+    }
+
     @NotNull
     @NotEmpty(message = "message should not be empty")
     private String message;
 
+    public Request(String message, String phonenumber, String scheduledTime) {
+        this.message = message;
+        this.phonenumber = phonenumber;
+        this.scheduledTime = scheduledTime;
+    }
 
     //created a custom validation annoation for phone number
     @phone

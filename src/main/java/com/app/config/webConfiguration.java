@@ -19,7 +19,7 @@ public class webConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		System.out.println("In configuration");
-		registry.addInterceptor(authInterceptor).addPathPatterns("/**");
+		registry.addInterceptor(authInterceptor).addPathPatterns("/schedule/message");
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.app.timer_tasks;
 
 import com.app.pojo.Message;
+import com.app.service.Messageservice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -23,7 +24,7 @@ import java.util.*;
 public class Task extends TimerTask {
 
 	@Autowired
-	MessageDao messageDao;
+	Messageservice messageservice;
 
 	public static String encodeParam(String data) {
 		String result = "";
@@ -56,7 +57,7 @@ public class Task extends TimerTask {
 
 	@Override
 	public void run() {
-		List<Message> messageList = messageDao.pollMessagesFromDatabase();
+		List<Message> messageList = messageservice.pollMessagesFromDatabase();
 		if (messageList.isEmpty()) {
 			System.out.println("messageList is empty");
 			return;
@@ -111,18 +112,18 @@ public class Task extends TimerTask {
 					Map<String, String> response = objectMapper.readValue(con.getInputStream(), Map.class);
 					System.out.println("MessageID is -->  " + response.get("messageId"));
 					System.out.println(response.toString());
-					int result = messageDao.updateMessageStatus(false,true, response.get("messageId"),LocalDateTime.now(),ms.getMessage_id());
+					int result = messageservice.updateMessageStatus(false,true, response.get("messageId"),LocalDateTime.now(),ms.getMessage_id());
 					if(result <1){
 						System.out.println("Error occured while updating status....");
 					}else System.out.println("Status of meesges is updated--> "+ result);
 				} else {
 					//mark submitted_status as failed
-					int result = messageDao.updateMessageStatus(false,false, null,null,ms.getMessage_id());
+					int result = messageservice.updateMessageStatus(false,false, null,null,ms.getMessage_id());
 					System.out.println("Message sending failed fot mesageID " + ms.getMessage_id());
 				}
 			} catch (Exception e) {
 				//mark submitted_status as failed
-				int result = messageDao.updateMessageStatus(false,false, null,null,ms.getMessage_id());
+				int result = messageservice.updateMessageStatus(false,false, null,null,ms.getMessage_id());
 				System.out.println(e.getMessage());
 			}
 		}

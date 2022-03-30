@@ -2,11 +2,21 @@ package com.app.pojo;
 
 public class Client {
 
+    public Client(int clientId, String clientName, String token) {
+        super();
+        this.clientId = clientId;
+        this.clientName = clientName;
+        this.token = token;
+    }
 
     private int clientId;
     private String clientName;
 
     private String token;
+
+    public Client() {
+
+    }
 
     public int getClientId() {
         return clientId;

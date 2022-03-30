@@ -10,6 +10,7 @@ package com.app.interceptors;
 
 import com.app.dao.MessageDao;
 import com.app.pojo.Client;
+import com.app.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -21,8 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 
+
 	@Autowired
-	MessageDao messageDao;
+	AuthService authService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -30,14 +32,8 @@ public class AuthInterceptor implements HandlerInterceptor {
 		System.out.println("In a prehandler method...");
 		String token = request.getHeader("token");
 
-		Client client = messageDao.validateToken(token);
+		Client client = authService.validateToken(token);
 		if (client == null) {
-//			response.setContentType("application/json");
-//			response.setStatus(200);
-//			PrintWriter out = response.getWriter();
-//			Response resp = new Response("random requestID", 1001, "Authentication failed");
-//			String responseString = new Gson().toJson(resp);
-//			out.print(responseString);
 			request.setAttribute("client",null);
 			return true;
 		}
