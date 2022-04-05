@@ -8,21 +8,24 @@ public class Message {
     String destination_phone_number;
     Integer client_id;
     String created_at;
+
+    public boolean isPending_status() {
+        return pending_status;
+    }
+
+    public void setPending_status(boolean pending_status) {
+        this.pending_status = pending_status;
+    }
+
     boolean scheduled_status;
+    boolean pending_status;
     String submitted_at;
     boolean submitted_status;
     String whatsapp_api_message_id;
 
 
-    public Message() {
-        super();
-    }
 
-
-    public Message(Integer message_id, String message, String scheduled_at, String destination_phone_number,
-                   Integer client_id, String created_at, boolean scheduled_status, String submitted_at,
-                   boolean submitted_status, String whatsapp_api_message_id) {
-        super();
+    public Message(Integer message_id, String message, String scheduled_at, String destination_phone_number, Integer client_id, String created_at, boolean scheduled_status, boolean pending_status, String submitted_at, boolean submitted_status, String whatsapp_api_message_id) {
         this.message_id = message_id;
         this.message = message;
         this.scheduled_at = scheduled_at;
@@ -30,10 +33,20 @@ public class Message {
         this.client_id = client_id;
         this.created_at = created_at;
         this.scheduled_status = scheduled_status;
+        this.pending_status = pending_status;
         this.submitted_at = submitted_at;
         this.submitted_status = submitted_status;
         this.whatsapp_api_message_id = whatsapp_api_message_id;
     }
+
+
+
+
+    public Message() {
+        super();
+    }
+
+
 
     public Integer getMessage_id() {
         return message_id;

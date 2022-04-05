@@ -8,7 +8,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 
-
 import java.io.IOException;
 import java.util.Timer;
 
@@ -30,10 +29,9 @@ public class MessageschedulerApplication {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void startScheduler()
-    {
+    public void startScheduler() {
         //run a task after every 1 minute....
-        timer.schedule(task,1000,60000);
+        timer.schedule(task, 1000, 60000);
     }
 
 }

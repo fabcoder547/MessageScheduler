@@ -2,35 +2,21 @@ package com.app.pojo;
 
 public class Response {
 
-
-    private String requestId;
-
-    private Integer code;
-
-    private String Message;
-
-
-    public Response() {
-
-    }
-
-    public Response(String requestId, Integer code, String message) {
-        super();
-        this.requestId = requestId;
-        this.code = code;
-        Message = message;
-    }
-
-    public String getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(String requestId) {
-        this.requestId = requestId;
-    }
-
     public Integer getCode() {
         return code;
+    }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "code=" + code +
+                ", Message='" + Message + '\'' +
+                '}';
+    }
+
+    public Response(Integer code, String message) {
+        this.code = code;
+        Message = message;
     }
 
     public void setCode(Integer code) {
@@ -44,5 +30,16 @@ public class Response {
     public void setMessage(String message) {
         Message = message;
     }
+
+    private Integer code;
+
+    private String Message;
+
+
+    public Response() {
+
+    }
+
+
 
 }

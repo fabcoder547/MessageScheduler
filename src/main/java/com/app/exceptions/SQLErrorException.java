@@ -3,13 +3,12 @@ package com.app.exceptions;
 public class SQLErrorException extends Exception {
 
     private static final long serialVersionUID = 1L;
-    private String errorMessage;
-    private int errorCode;
+    private final String errorMessage;
+    private final int errorCode = 1003;
 
-    public SQLErrorException(String errorMessage, int errorCode) {
+    public SQLErrorException(String errorMessage) {
         super(errorMessage);
         this.errorMessage = errorMessage;
-        this.errorCode = errorCode;
     }
 
     public String getErrorMessage() {

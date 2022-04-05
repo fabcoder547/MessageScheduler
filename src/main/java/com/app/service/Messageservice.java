@@ -15,29 +15,29 @@ import java.util.List;
 @Service
 public class Messageservice {
 
+
+
+    public Messageservice(MessageDao messageDao) {
+        this.messageDao = messageDao;
+    }
+
     @Autowired
     MessageDao messageDao;
 
 
     public int saveMessage(Request requestBody, Client client) throws SQLErrorException {
-        return messageDao.insetMessage(requestBody,client);
+        return messageDao.insertMessage(requestBody, client);
     }
 
-    public int updateMessageStatus(Boolean pending_status, Boolean submited_status, String whatsAppMessageId, LocalDateTime submitted_at, Integer message_id){
+    public int updateMessageStatus(Boolean pending_status, Boolean submited_status, String whatsAppMessageId, LocalDateTime submitted_at, Integer message_id) throws SQLErrorException {
 
         return messageDao.updateMessageStatus(pending_status, submited_status, whatsAppMessageId, submitted_at, message_id);
     }
 
 
-    public List<Message> pollMessagesFromDatabase(){
+    public List<Message> pollMessagesFromDatabase() throws SQLErrorException {
         return messageDao.getAllMessagesInOneMinute();
     }
-
-
-
-
-
-
 
 
 }

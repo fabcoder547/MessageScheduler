@@ -1,6 +1,7 @@
 package com.app.service;
 
 import com.app.dao.ClientDao;
+import com.app.exceptions.SQLErrorException;
 import com.app.pojo.Client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,16 @@ class AuthServiceTest {
 
 
     @Test
-    void validateToken() {
-        Client testClient = new Client(2, "dummy", "dummytoken");
+    void validateToken() throws SQLErrorException {
+        Client testClient = new Client(10125, "dummy", "dummytoken");
         when(clientDao.getClientUsingToken("dummytoken")).thenReturn(testClient);
         assertThat(authService.validateToken("dummytoken")).isEqualTo(testClient);
+    }
+
+
+    @Test
+    void validateTokenAsInvalid() throws SQLErrorException {
+        when(clientDao.getClientUsingToken("Invalid Token")).thenReturn(null);
+        assertThat(authService.validateToken("Invalid Token")).isNull();
     }
 }

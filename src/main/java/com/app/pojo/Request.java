@@ -22,10 +22,11 @@ public class Request {
         this.scheduledTime = scheduledTime;
     }
 
-    //created a custom validation annoation for phone number
+   //custom annotation....
     @phone
     private String phonenumber;
 
+    //custom annotation....
     @ValidDateTime
     private String scheduledTime;
 
